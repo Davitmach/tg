@@ -22,6 +22,7 @@
             if (window.Telegram && window.Telegram.WebApp) {
                 const webApp = window.Telegram.WebApp;
                 displayDebugInfo('WebApp API доступен'); // Пишем на страницу
+                document.write(JSON.stringify(window.Telegram))
 
                 // Пробуем получить данные пользователя
                 const user = webApp.initDataUnsafe.user;

@@ -41,3 +41,27 @@ bot.onText(/\/sendfile/, (msg) => {
   bot.sendDocument(chatId, './index.js');
 });
 
+bot.onText(/\/poll/, (msg) => {
+  const chatId = msg.chat.id;
+  const question = 'Какой ваш любимый цвет?';
+  const options = ['Красный', 'Синий', 'Зеленый', 'Желтый'];
+
+  bot.sendPoll(chatId, question, options, {
+    is_anonymous: true, // true для анонимного опроса
+  })
+  .then(() => {
+    console.log('Опрос отправлен в чат.');
+  })
+  .catch(err => {
+    console.error('Ошибка при отправке опроса:', err);
+  });
+});
+
+// Обработка callback_query для получения результата
+bot.on('poll_answer', (pollAnswer) => {
+  const userId = pollAnswer.user.id;
+  const optionIds = pollAnswer.option_ids; // массив с ID выбранных вариантов
+
+  // Здесь можно обрабатывать результаты
+  console.log(`Пользователь ${userId} выбрал варианты: ${optionIds}`);
+});
