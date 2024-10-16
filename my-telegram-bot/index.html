@@ -3,13 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Telegram WebApp</title>
 </head>
 <body>
-    EDIDEJIEIJ  
+    <div id="content">Loading...</div>
     <script>
-        console.log(window.telegram);
-        
+        // Дождемся загрузки страницы
+        window.addEventListener('load', function() {
+            if (window.Telegram.WebApp) {
+                const webApp = window.Telegram.WebApp;
+                
+                // Используем WebApp данные
+                console.log('WebApp Data:', webApp);
+                document.getElementById('content').textContent = `Привет, ${webApp.initDataUnsafe.user.first_name}`;
+            } else {
+                console.error('Telegram WebApp не доступен');
+            }
+        });
     </script>
 </body>
 </html>
