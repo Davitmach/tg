@@ -14,13 +14,14 @@ bot.onText(/\/start/, async (msg) => {
   
   
   bot.sendMessage(chatId, `Привет ${msg.chat.first_name}! Я ваш бот!`);
-  await bot.sendMessage(chatId,'Щас кнопка будет', {
+  await bot.sendMessage(chatId, 'Щас кнопка будет', {
     reply_markup: {
-      inline_keyboard:[
-        [{text:'зАполнить',web_app: {url:webAppUrl}}]
-      ]
+        inline_keyboard: [
+            [{ text: 'Заполнить', web_app: { url: webAppUrl + '?start=' + chatId } }]
+        ]
     }
-  })
+});
+  
 });
 
 // Ответ на любое сообщение
@@ -39,3 +40,4 @@ bot.onText(/\/sendfile/, (msg) => {
   const chatId = msg.chat.id;
   bot.sendDocument(chatId, './index.js');
 });
+
