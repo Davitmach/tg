@@ -8,7 +8,7 @@
 <body style="background: white;">
     <div id="user-info">Loading user info...</div>
     <div id="debug-info"></div> <!-- Для отладки -->
-    <div id="Json"></div>
+    <div style="width: 100px;" id="Json"></div>
    
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
@@ -28,8 +28,7 @@
 
                 // Пробуем получить данные пользователя
                 const user = webApp.initDataUnsafe.user;
-var img =document.createElement('img').src = webApp.initDataUnsafe.user.photo_url;
-document.body.append(img)
+
                 // Проверяем данные пользователя
                 console.log('User data:', webApp.initDataUnsafe); // Логируем все данные
                 if (user) {
