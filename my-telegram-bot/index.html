@@ -10,32 +10,37 @@
     <div id="debug-info"></div> <!-- Для отладки -->
 
     <script>
-     // Дождемся полной загрузки страницы
-window.addEventListener('load', function() {
-    // Проверяем доступен ли объект Telegram WebApp
-    if (window.Telegram && window.Telegram.WebApp) {
-        const webApp = window.Telegram.WebApp;
-        displayDebugInfo('WebApp API доступен'); // Пишем на страницу
-
-        // Пробуем получить данные пользователя
-        const user = webApp.initDataUnsafe.user;
-
-        // Проверяем данные пользователя
-        console.log('User data:', webApp.initDataUnsafe); // Логируем все данные
-        if (user) {
-            const userName = user.first_name || 'User';
-            document.getElementById('user-info').textContent = `Привет, ${userName}!`;
-            displayDebugInfo(`Имя пользователя: ${userName}`); // Пишем на страницу имя пользователя
-        } else {
-            document.getElementById('user-info').textContent = 'Пользователь не найден.';
-            displayDebugInfo('Пользователь не найден');
+        // Функция для отображения отладочной информации на странице
+        function displayDebugInfo(message) {
+            const debugDiv = document.getElementById('debug-info');
+            debugDiv.innerHTML += `<p>${message}</p>`;
         }
-    } else {
-        document.getElementById('user-info').textContent = 'Telegram WebApp API не доступен.';
-        displayDebugInfo('Telegram WebApp API не доступен');
-    }
-});
 
+        // Дождемся полной загрузки страницы
+        window.addEventListener('load', function() {
+            // Проверяем доступен ли объект Telegram WebApp
+            if (window.Telegram && window.Telegram.WebApp) {
+                const webApp = window.Telegram.WebApp;
+                displayDebugInfo('WebApp API доступен'); // Пишем на страницу
+
+                // Пробуем получить данные пользователя
+                const user = webApp.initDataUnsafe.user;
+
+                // Проверяем данные пользователя
+                console.log('User data:', webApp.initDataUnsafe); // Логируем все данные
+                if (user) {
+                    const userName = user.first_name || 'User';
+                    document.getElementById('user-info').textContent = `Привет, ${userName}!`;
+                    displayDebugInfo(`Имя пользователя: ${userName}`); // Пишем на страницу имя пользователя
+                } else {
+                    document.getElementById('user-info').textContent = 'Пользователь не найден.';
+                    displayDebugInfo('Пользователь не найден');
+                }
+            } else {
+                document.getElementById('user-info').textContent = 'Telegram WebApp API не доступен.';
+                displayDebugInfo('Telegram WebApp API не доступен');
+            }
+        });
     </script>
 </body>
 </html>
