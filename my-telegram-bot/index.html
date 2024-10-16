@@ -6,18 +6,27 @@
     <title>Telegram WebApp</title>
 </head>
 <body>
-    <div id="content">Loading...</div>
+    <div id="user-info">Loading user info...</div>
+
     <script>
-        // Дождемся загрузки страницы
+        // Убедитесь, что Telegram WebApp API доступен
         window.addEventListener('load', function() {
             if (window.Telegram.WebApp) {
                 const webApp = window.Telegram.WebApp;
                 
-                // Используем WebApp данные
-                console.log('WebApp Data:', webApp);
-                document.getElementById('content').textContent = `Привет, ${webApp.initDataUnsafe.user.first_name}`;
+                // Получаем данные пользователя
+                const user = webApp.initDataUnsafe.user;
+
+                // Если пользователь доступен, отобразим его имя
+                if (user) {
+                    const userName = user.first_name || 'User';
+                    document.getElementById('user-info').textContent = `Привет, ${userName}!`;
+                } else {
+                    document.getElementById('user-info').textContent = 'Пользователь не найден.';
+                }
             } else {
-                console.error('Telegram WebApp не доступен');
+                console.error('Telegram WebApp API не доступен');
+                document.getElementById('user-info').textContent = 'Telegram WebApp API не доступен.';
             }
         });
     </script>
