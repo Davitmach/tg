@@ -7,26 +7,37 @@
 </head>
 <body style="background: white;">
     <div id="user-info">Loading user info...</div>
+    <div id="debug-info"></div> <!-- Для отладки -->
 
     <script>
-        // Убедитесь, что Telegram WebApp API доступен
-        window.addEventListener('load', function() {
-            if (window.Telegram.WebApp) {
-                const webApp = window.Telegram.WebApp;
-                
-                // Получаем данные пользователя
-                const user = webApp.initDataUnsafe.user;
+        // Функция для отображения отладочной информации на странице
+        function displayDebugInfo(message) {
+            const debugDiv = document.getElementById('debug-info');
+            debugDiv.innerHTML += `<p>${message}</p>`;
+        }
 
-                // Если пользователь доступен, отобразим его имя
+        // Дождемся полной загрузки страницы
+        window.addEventListener('load', function() {
+            // Проверяем доступен ли объект Telegram WebApp
+            if (window.Telegram && window.Telegram.WebApp) {
+                const webApp = window.Telegram.WebApp;
+                displayDebugInfo('WebApp API доступен'); // Пишем на страницу
+
+                // Пробуем получить данные пользователя
+                const user = webApp.initDataUnsafe.user;
+                
+                // Проверяем данные пользователя
                 if (user) {
                     const userName = user.first_name || 'User';
                     document.getElementById('user-info').textContent = `Привет, ${userName}!`;
+                    displayDebugInfo(`Имя пользователя: ${userName}`); // Пишем на страницу имя пользователя
                 } else {
                     document.getElementById('user-info').textContent = 'Пользователь не найден.';
+                    displayDebugInfo('Пользователь не найден');
                 }
             } else {
-                console.error('Telegram WebApp API не доступен');
                 document.getElementById('user-info').textContent = 'Telegram WebApp API не доступен.';
+                displayDebugInfo('Telegram WebApp API не доступен');
             }
         });
     </script>
